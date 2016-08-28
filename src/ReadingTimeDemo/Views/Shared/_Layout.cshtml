@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ReadingTimeDemo</title>
-
+    <title>@ViewData["Title"] - It's Reading Time!</title>
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -15,6 +14,28 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <style>
+        .navbar {
+            margin-bottom: 20px;
+            border-radius: 0;
+        }
+
+        footer {
+            background-color: #f2f2f2;
+            padding: 25px;
+        }
+
+        .emoji {
+            width: 22px;
+            height: 22px;
+        }
+
+        .thumbnail {
+            border: 0 none;
+            box-shadow: none;
+        }
+    </style>
+
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
 </head>
 <body>
@@ -27,11 +48,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ReadingTimeDemo</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Home</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Book" asp-action="Index">Favorites</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
@@ -40,9 +61,13 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2016 - ReadingTimeDemo</p>
+        <footer  class="container-fluid text-center navbar-fixed-bottom">
+            <p>From <img class="emoji" src="/images/octocat.png" /> with <img class="emoji" src="/images/heart.png" /></p>
+            <form class="form-inline">
+                Get favorites:
+                <input type="email" class="form-control" size="50" placeholder="Email Address"></input>
+                <button type="button" class="btn btn-danger">Sign Up</button>
+            </form>
         </footer>
     </div>
 
