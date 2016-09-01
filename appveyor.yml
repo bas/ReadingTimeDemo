@@ -1,7 +1,6 @@
 os: Visual Studio 2015
 
 build_script:
-  - ps: nuget restore
   - ps: dotnet --info
   - ps: dotnet restore
   - ps: dotnet --verbose build "src\ReadingTimeDemo"
