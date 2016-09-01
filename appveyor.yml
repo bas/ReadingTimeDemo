@@ -5,3 +5,5 @@ build_script:
   - ps: dotnet restore
   - ps: dotnet --verbose build "src\ReadingTimeDemo"
   - ps: dotnet test "test\ReadingTimeDemo.UnitTests"
+
+test: off 
