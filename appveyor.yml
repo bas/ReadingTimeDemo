@@ -5,5 +5,5 @@ build_script:
   - ps: dotnet --info
   # Run dotnet new 
   - ps: dotnet restore
-  - ps: dotnet --verbose build
-  - ps: dotnet test
+  - ps: dotnet --verbose build "src\ReadingTimeDemo"
+  - ps: dotnet test "test\ReadingTimeDemo.UnitTests"
