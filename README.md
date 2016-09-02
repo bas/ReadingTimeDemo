@@ -1,2 +1,2 @@
 # ReadingTimeDemo
-A demo application using .NET Core based on the Java Reading Time demo
+A demo Web application using .NET Core, NuGet and xUnit with Appveyor for CI and Azure for deploys.
