@@ -5,11 +5,5 @@ build_script:
   - ps: dotnet restore
   - ps: dotnet --verbose build "src\ReadingTimeDemo"
   - ps: dotnet test "test\ReadingTimeDemo.UnitTests"
-  - RunCoverage.bat
-  - ps: coveralls.io
 
 test: off 
-
-environment:
-  COVERALLS_REPO_TOKEN:
-    secure: ovOZ2r2weh6QancHWcZZIFsqpIDDXhoDqCDWuLT2GYzSC+O0HkcPP3fgXcHVI0RS
