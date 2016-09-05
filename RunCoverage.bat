@@ -5,7 +5,7 @@ SET filter="+[ReadingTimeDemo]* -[ReadingTimeDemo]*Startup -[ReadingTimeDemo]*Pr
 SET opencoverversion=4.6.519
 SET reportgeneratorversion=2.4.5.0
 
-SET packages=C:\Users\appveyor\.nuget\packages\
+SET packages=C:\Users\appveyor\.nuget\packages
 SET opencover=%packages%\OpenCover\%opencoverversion%\OpenCover.Console.exe
 SET reportgenerator=%packages%\ReportGenerator\%reportgeneratorversion%\ReportGenerator.exe
 
