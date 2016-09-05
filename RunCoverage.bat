@@ -9,8 +9,9 @@ SET packages=C:\Users\appveyor\.nuget\packages
 SET opencover=%packages%\OpenCover\%opencoverversion%\OpenCover.Console.exe
 SET reportgenerator=%packages%\ReportGenerator\%reportgeneratorversion%\ReportGenerator.exe
 
-DIR %packages%\OpenCover 
-DIR %packages%\ReportGenerator
+DIR %packages%\OpenCover\4.6.519 
+
+DIR %packages%\ReportGenerator\2.4.5
 
 SET targetdir=%~dp0test\ReadingTimeDemo.UnitTests\bin\Debug\netcoreapp1.0
 SET coveragedir=coverage
