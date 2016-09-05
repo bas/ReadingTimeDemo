@@ -2,10 +2,10 @@
 SET filter="+[ReadingTimeDemo]* -[ReadingTimeDemo]*Startup -[ReadingTimeDemo]*Program"
 
 :: Update this when OpenCover or ReportGenerator are updated
-SET opencoverversion=4.5.3809-rc94
-SET reportgeneratorversion=2.1.4
+SET opencoverversion=4.6.519
+SET reportgeneratorversion=2.4.5.0
 
-SET packages=C:\Users\Bas\.nuget\packages
+SET packages=C:\Users\appveyor\.nuget\packages\.tools
 SET opencover=%packages%\OpenCover\%opencoverversion%\OpenCover.Console.exe
 SET reportgenerator=%packages%\ReportGenerator\%reportgeneratorversion%\ReportGenerator.exe
 
