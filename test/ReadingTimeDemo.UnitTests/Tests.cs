@@ -9,6 +9,13 @@ namespace Tests
     public class Tests
     {
         [Fact]
+        public void TestEmptyBookConstructor()
+        {
+            Book book = new Book();
+            Assert.NotNull(book);
+        }
+
+        [Fact]
         public void TestBookConstructor() 
         {
             Book book = new Book("Crossing the Chasm", "Geoffrey A.Moore");
