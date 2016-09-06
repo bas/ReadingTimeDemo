@@ -3,6 +3,9 @@ using ReadingTimeDemo.Models;
 using ReadingTimeDemo.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using ReadingTimeDemo.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Tests
 {
@@ -80,5 +83,46 @@ namespace Tests
             BookService bookService = new BookService();
             Assert.Equal(4, bookService.Books.Count);
         }
+
+        [Fact]
+        public void HomeControllerIndexViewTest()
+        {
+            var controller = new HomeController();
+
+            var result = controller.Index();
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+        }
+
+        [Fact]
+        public void HomeControllerAboutViewTest()
+        {
+            var controller = new HomeController();
+
+            var result = controller.About();
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            ViewDataDictionary viewData = viewResult.ViewData;
+            Assert.Equal("Your application description page.", viewData["Message"]);
+
+        }
+
+        [Fact]
+        public void HomeControllerContactViewTest()
+        {
+            var controller = new HomeController();
+
+            var result = controller.Contact();
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            ViewDataDictionary viewData = viewResult.ViewData;
+            Assert.Equal("Your contact page.", viewData["Message"]);
+
+        }
+
     }
 }
+
