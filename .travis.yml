@@ -20,3 +20,6 @@ script:
  - dotnet restore
  - dotnet --verbose build "src/ReadingTimeDemo"
  - dotnet test "test/ReadingTimeDemo.UnitTests"
+
+after_success:
+ - coveralls
