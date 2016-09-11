@@ -1,0 +1,54 @@
+﻿@using ReadingTimeDemo.Models
+@model List<Book>
+@{
+    ViewData["Title"] = "It's Reading Time!";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="3">@ViewData["Title"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in @Model)
+                    {
+                        <tr>
+                            <td class="col-sm-8 col-md-6">
+                                <div class="media">
+                                    <a class="thumbnail pull-left" href="#"> <img class="media-object" src="~/images/covers/@item.Cover" style="width: 72px; height: 72px;" /></a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="#">@item.Title</a></h4>
+                                        <h5 class="media-heading"> by <a href="#">@item.Author</a></h5>
+                                        <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                        <div>
+                                            <span>Rating: </span>
+                                            <span>
+                                                @{
+                                                    var i = 0;
+                                                    while (i < @item.Rating)
+                                                    {
+                                                        i += 1;
+                                                        <img src="~/images/star.png" style="width: 12px; height: 12px;" />
+                                                    }
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>$13.99</strong></td>
+                            <td class="col-sm-1 col-md-1">
+                                <button type="button" class="btn btn-success">
+                                    Add to cart
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
