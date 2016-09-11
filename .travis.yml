@@ -3,11 +3,12 @@ solution: ReadingTimeDemo.sln
 
 matrix:
   include:
-    - os: osx
-      osx_image: xcode7.3
-      dotnet: 1.0.0-preview2-003121
-      mono: none
-      env: DOTNETCORE=1
+# Commenting out osx as it is very slow
+#    - os: osx
+#      osx_image: xcode7.3
+#      dotnet: 1.0.0-preview2-003121
+#      mono: none
+#      env: DOTNETCORE=1
     - os: linux
       dist: trusty
       sudo: required
@@ -20,6 +21,3 @@ script:
  - dotnet restore
  - dotnet --verbose build "src/ReadingTimeDemo"
  - dotnet test "test/ReadingTimeDemo.UnitTests"
-
-after_success:
-  - coveralls
