@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using ReadingTimeDemo.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System;
+using System.Linq;
 
 namespace Tests
 {
