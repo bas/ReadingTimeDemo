@@ -3,7 +3,7 @@ if not exist .git goto noroot
 
 for /f "delims=" %%a in ('git rev-parse --abbrev-ref HEAD') do @set branch=%%a
 
-if %branch% == 'master' goto master
+if "%branch%" == "master" goto master
 
 xcopy ".\scripts\resources\src\*" ".\src" /s /i /y
 
