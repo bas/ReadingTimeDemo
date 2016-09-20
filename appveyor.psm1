@@ -1,6 +1,5 @@
 $RequiredCoverage=80
 $User="appveyor"
-$PercentageValue
 
 function Invoke-PendingStatus
 {
@@ -46,6 +45,7 @@ function Invoke-OpenCover
 {
     param()
 
+	$PercentageValue
 	$Filter="+[ReadingTimeDemo]* -[ReadingTimeDemo]*Startup -[ReadingTimeDemo]*Program"
 	$OpenCoverVersion="4.6.519"
 	$ReportGeneratorVersion="2.4.5"
@@ -70,10 +70,10 @@ function Invoke-OpenCover
 
 	Write-Host "Coverage percentage: $PercentageValue"
 
-	Invoke-ReportStatus -percentage $PercentageValue
+	Post-ReportStatus -percentage $PercentageValue
 }
 
-function Invoke-ReportStatus
+function Post-ReportStatus
 {
 	param(
 		[string] $percentage
@@ -90,3 +90,4 @@ function Invoke-ReportStatus
 	Update-GitHubStatus -status $Status -message $Message
 }
 
+Export-ModuleMember -Function "Invoke-*"
