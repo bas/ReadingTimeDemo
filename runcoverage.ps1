@@ -29,8 +29,6 @@ type "$WorkingDir\$CoverageDir\index.htm" | where { $_ -match "Line coverage:</t
 
 Write-Host "Coverage percentage: $PercentageValue"
 
-<#
-
 $Status = "failure"
 $Message = "Coverage check failed to reach 90%" 
 
@@ -64,4 +62,3 @@ $ReleaseParams = @{
  $Result = Invoke-RestMethod @ReleaseParams
 
  Write-Host $Result
- #>
