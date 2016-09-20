@@ -1,5 +1,5 @@
 $RequiredCoverage=90
-$User="bas"
+$User="appveyor"
 $Filter="+[ReadingTimeDemo]* -[ReadingTimeDemo]*Startup -[ReadingTimeDemo]*Program"
 
 $OpenCoverVersion="4.6.519"
