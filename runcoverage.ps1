@@ -17,6 +17,8 @@ $CoverageFile="coverage.xml"
 
 $AllArgs = @("-oldStyle","-filter:$Filter", "-register:user","-targetdir:$TargetDir", '-target:dotnet.exe', "-output:$CoverageFile", "-targetargs:test $WorkingDir\test\ReadingTimeDemo.UnitTests")
 
+Write-Host "About to run coverage tests..."
+
 <#
 
 & $OpenCover $AllArgs
