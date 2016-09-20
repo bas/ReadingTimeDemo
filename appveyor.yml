@@ -1,27 +1,5 @@
 os: Visual Studio 2015
 
-before_build:
-  - ps: |
-$PendingData = @{
-  state = "pending";
-  target_url = "https://appveyor.com/";
-  description = "Waiting for OpenCover coverage update to complete";
-  context = "coverage/opencover"
-}
-
-$PendingReleaseParams = @{
-  Uri = "https://octodemo.com/api/v3/repos/$env:APPVEYOR_REPO_NAME/statuses/$env:APPVEYOR_REPO_COMMIT";
-  Method = 'POST';
-  Headers = @{
-    Authorization = 'Basic ' + [Convert]::ToBase64String(
-    [Text.Encoding]::ASCII.GetBytes($env:GITHUB_TOKEN + ":x-oauth-basic"))
-  }
-  ContentType = 'application/json';
-  Body = (ConvertTo-Json $PendingData -Compress)
-}
-
-Invoke-RestMethod @PendingReleaseParams
-
 build_script:
   - ps: dotnet --info
   - ps: dotnet restore

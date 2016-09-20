@@ -21,7 +21,6 @@ $RepoSlug = $env:APPVEYOR_REPO_NAME
 $Commit = $env:APPVEYOR_REPO_COMMIT
 $Token = $env:GITHUB_TOKEN
 
-<#
 $PendingData = @{
 	state = "pending";
 	target_url = "https://appveyor.com/";
@@ -41,7 +40,7 @@ $PendingReleaseParams = @{
  }
 
  $PendingResult = Invoke-RestMethod @PendingReleaseParams
-#>
+
 
 & $OpenCover $AllArgs
 
