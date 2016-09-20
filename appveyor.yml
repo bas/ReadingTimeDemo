@@ -1,10 +1,14 @@
 os: Visual Studio 2015
 
+before_build:
+  - ps: Import-Module .\appveyor.psm1
+  - ps: Invoke-PendingStatus
+
 build_script:
   - ps: dotnet --info
   - ps: dotnet restore
   - ps: dotnet --verbose build "src\ReadingTimeDemo"
   - ps: dotnet test "test\ReadingTimeDemo.UnitTests"
-  - RunCoverage.bat
+  - ps: Invoke-OpenCover
 
 test: off 
