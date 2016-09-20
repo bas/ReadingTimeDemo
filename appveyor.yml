@@ -6,7 +6,7 @@ $PendingData = @{
   state = "pending";
   target_url = "https://appveyor.com/";
   description = "Waiting for OpenCover coverage update to complete";
-  context = "coverage/opencover";
+  context = "coverage/opencover"
 }
 
 $PendingReleaseParams = @{
@@ -14,7 +14,7 @@ $PendingReleaseParams = @{
   Method = 'POST';
   Headers = @{
     Authorization = 'Basic ' + [Convert]::ToBase64String(
-    [Text.Encoding]::ASCII.GetBytes($env:GITHUB_TOKEN + ":x-oauth-basic"));
+    [Text.Encoding]::ASCII.GetBytes($env:GITHUB_TOKEN + ":x-oauth-basic"))
   }
   ContentType = 'application/json';
   Body = (ConvertTo-Json $PendingData -Compress)
