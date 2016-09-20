@@ -1,4 +1,4 @@
-$RequiredCoverage=90
+$RequiredCoverage=80
 $User="appveyor"
 $Filter="+[ReadingTimeDemo]* -[ReadingTimeDemo]*Startup -[ReadingTimeDemo]*Program"
 
@@ -30,11 +30,11 @@ type "$WorkingDir\$CoverageDir\index.htm" | where { $_ -match "Line coverage:</t
 Write-Host "Coverage percentage: $PercentageValue"
 
 $Status = "failure"
-$Message = "Coverage check failed to reach 90%" 
+$Message = "Coverage failed to reach $RequiredCoverage% ($PercentageValue)" 
 
-if ($PercentageValue -ge 90) {
+if ($PercentageValue -ge $RequiredCoverage) {
 	$Status = "success"
-	$Message = "Coverage check is 90% or higher"
+	$Message = "Coverage is $RequiredCoverage% or higher  ($PercentageValue)"
 }
 
 $RepoSlug = $env:APPVEYOR_REPO_NAME
@@ -45,7 +45,7 @@ $Data = @{
 	state = $Status;
 	target_url = "https://appveyor.com/";
 	description = $Message;
-	context = "coverage-status-check/opencover";
+	context = "coverage/opencover";
 }
 
 $ReleaseParams = @{
