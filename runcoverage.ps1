@@ -24,7 +24,7 @@ $Token = $env:GITHUB_TOKEN
 $PendingData = @{
 	state = "pending";
 	target_url = "https://appveyor.com/";
-	description = "Running coverage";
+	description = "Waiting for OpenCover coverage update to complete";
 	context = "coverage/opencover";
 }
 
