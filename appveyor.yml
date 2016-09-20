@@ -10,6 +10,5 @@ build_script:
   - ps: dotnet --verbose build "src\ReadingTimeDemo"
   - ps: dotnet test "test\ReadingTimeDemo.UnitTests"
   - ps: Invoke-OpenCover
-  - ps: Invoke-ReportStatus
 
 test: off 

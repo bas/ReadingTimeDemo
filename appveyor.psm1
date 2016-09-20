@@ -68,18 +68,23 @@ function Invoke-OpenCover
 
 	type "$WorkingDir\$CoverageDir\index.htm" | where { $_ -match "Line coverage:</th><td>(?<percentage>[A-Z0-9.%]+)</td></tr>" } | foreach { $PercentageValue = $matches['percentage'] }
 
+	Write-Host "Coverage percentage: $PercentageValue"
+
+	Invoke-ReportStatus -percentage $PercentageValue
 }
 
 function Invoke-ReportStatus
 {
-	param()
+	param(
+		[string] $percentage
+	)
 
 	$Status = "failure"
-	$Message = "Coverage failed to reach $RequiredCoverage% ($PercentageValue)" 
+	$Message = "Coverage failed to reach $RequiredCoverage% ($percentage)" 
 
-	if ($PercentageValue -ge $RequiredCoverage) {
+	if ($percentage -ge $RequiredCoverage) {
 		$Status = "success"
-		$Message = "Coverage is $RequiredCoverage% or higher  ($PercentageValue)"
+		$Message = "Coverage is $RequiredCoverage% or higher  ($percentage)"
 	}
 
 	Update-GitHubStatus -status $Status -message $Message
