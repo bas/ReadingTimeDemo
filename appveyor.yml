@@ -3,10 +3,10 @@ os: Visual Studio 2015
 before_build:
   - ps: |
 $PendingData = @{
-	state = "pending";
-	target_url = "https://appveyor.com/";
-	description = "Waiting for OpenCover coverage update to complete";
-	context = "coverage/opencover";
+  state = "pending";
+  target_url = "https://appveyor.com/";
+  description = "Waiting for OpenCover coverage update to complete";
+  context = "coverage/opencover";
 }
 
 $PendingReleaseParams = @{
