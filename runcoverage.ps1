@@ -17,7 +17,29 @@ $CoverageFile="coverage.xml"
 
 $AllArgs = @("-oldStyle","-filter:$Filter", "-register:user","-targetdir:$TargetDir", '-target:dotnet.exe', "-output:$CoverageFile", "-targetargs:test $WorkingDir\test\ReadingTimeDemo.UnitTests")
 
-Write-Host "About to run coverage tests..."
+$RepoSlug = $env:APPVEYOR_REPO_NAME
+$Commit = $env:APPVEYOR_REPO_COMMIT
+$Token = $env:GITHUB_TOKEN
+
+$PendingData = @{
+	state = "pending";
+	target_url = "https://appveyor.com/";
+	description = "Running coverage";
+	context = "coverage/opencover";
+}
+
+$PendingReleaseParams = @{
+   Uri = "https://octodemo.com/api/v3/repos/$RepoSlug/statuses/$Commit";
+   Method = 'POST';
+   Headers = @{
+     Authorization = 'Basic ' + [Convert]::ToBase64String(
+     [Text.Encoding]::ASCII.GetBytes($Token + ":x-oauth-basic"));
+   }
+   ContentType = 'application/json';
+   Body = (ConvertTo-Json $PendingData -Compress)
+ }
+
+ $PendingResult = Invoke-RestMethod @PendingReleaseParams
 
 & $OpenCover $AllArgs
 
@@ -36,10 +58,6 @@ if ($PercentageValue -ge $RequiredCoverage) {
 	$Status = "success"
 	$Message = "Coverage is $RequiredCoverage% or higher  ($PercentageValue)"
 }
-
-$RepoSlug = $env:APPVEYOR_REPO_NAME
-$Commit = $env:APPVEYOR_REPO_COMMIT
-$Token = $env:GITHUB_TOKEN
 
 $Data = @{
 	state = $Status;
@@ -60,5 +78,3 @@ $ReleaseParams = @{
  }
 
  $Result = Invoke-RestMethod @ReleaseParams
-
- Write-Host $Result
