@@ -17,6 +17,8 @@ $CoverageFile="coverage.xml"
 
 $AllArgs = @("-oldStyle","-filter:$Filter", "-register:user","-targetdir:$TargetDir", '-target:dotnet.exe', "-output:$CoverageFile", "-targetargs:test $WorkingDir\test\ReadingTimeDemo.UnitTests")
 
+<#
+
 & $OpenCover $AllArgs
 
 & $ReportGenerator -targetdir:$CoverageDir -reporttypes:Html -reports:$CoverageFile -verbosity:Error
@@ -27,8 +29,6 @@ type "$WorkingDir\$CoverageDir\index.htm" | where { $_ -match "Line coverage:</t
 
 Write-Host "Coverage percentage: $PercentageValue"
 
-
-<#
 $Status = "failure"
 $Message = "Coverage check failed to reach 90%" 
 
