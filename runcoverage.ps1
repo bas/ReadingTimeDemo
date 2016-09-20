@@ -19,8 +19,6 @@ $AllArgs = @("-oldStyle","-filter:$Filter", "-register:user","-targetdir:$Target
 
 Write-Host "About to run coverage tests..."
 
-<#
-
 & $OpenCover $AllArgs
 
 & $ReportGenerator -targetdir:$CoverageDir -reporttypes:Html -reports:$CoverageFile -verbosity:Error
@@ -30,6 +28,8 @@ $PercentageValue
 type "$WorkingDir\$CoverageDir\index.htm" | where { $_ -match "Line coverage:</th><td>(?<percentage>[A-Z0-9.%]+)</td></tr>" } | foreach { $PercentageValue = $matches['percentage'] }
 
 Write-Host "Coverage percentage: $PercentageValue"
+
+<#
 
 $Status = "failure"
 $Message = "Coverage check failed to reach 90%" 
