@@ -5,7 +5,7 @@ function Invoke-PendingStatus
 {
 	param()
 
-	Update-GitHubStatus -status "pending" -message "Waiting for OpenCover coverage update to complete"
+	Update-GitHubStatus -status "pending" -message "Waiting for OpenCover to complete"
 }
 
 function Update-GitHubStatus
@@ -23,7 +23,7 @@ function Update-GitHubStatus
 		state = $status;
 		target_url = "https://appveyor.com/";
 		description = $message;
-		context = "coverage/opencover";
+		context = "coverage/opencover/pr";
 	}
 
 	$Params = @{
@@ -64,9 +64,9 @@ function Invoke-OpenCover
 
 	& $OpenCover $AllArgs
 
-	& $ReportGenerator -targetdir:$CoverageDir -reporttypes:Html -reports:$CoverageFile -verbosity:Error
+	& $ReportGenerator -targetdir:$CoverageDir -reporttypes:TextSummary -reports:$CoverageFile -verbosity:Error
 
-	type "$WorkingDir\$CoverageDir\index.htm" | where { $_ -match "Line coverage:</th><td>(?<percentage>[A-Z0-9.%]+)</td></tr>" } | foreach { $PercentageValue = $matches['percentage'] }
+	type "$WorkingDir\$CoverageDir\Summary.txt" | where { $_ -match "Line coverage: (?<percentage>[A-Z0-9.%]+)" } | foreach { $PercentageValue = $matches['percentage'] }
 
 	Write-Host "Coverage percentage: $PercentageValue"
 
@@ -80,11 +80,11 @@ function Post-ReportStatus
 	)
 
 	$Status = "failure"
-	$Message = "Coverage failed to reach $RequiredCoverage% ($percentage)" 
+
+	$Message = "Line coverage is $percentage (required: $RequiredCoverage%)" 
 
 	if ($percentage -ge $RequiredCoverage) {
 		$Status = "success"
-		$Message = "Coverage is $RequiredCoverage% or higher  ($percentage)"
 	}
 
 	Update-GitHubStatus -status $Status -message $Message
