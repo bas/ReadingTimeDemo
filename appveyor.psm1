@@ -64,9 +64,9 @@ function Invoke-OpenCover
 
 	& $OpenCover $AllArgs
 
-	& $ReportGenerator -targetdir:$CoverageDir -reporttypes:Html -reports:$CoverageFile -verbosity:Error
+	& $ReportGenerator -targetdir:$CoverageDir -reporttypes:TextSummary -reports:$CoverageFile -verbosity:Error
 
-	type "$WorkingDir\$CoverageDir\index.htm" | where { $_ -match "Line coverage:</th><td>(?<percentage>[A-Z0-9.%]+)</td></tr>" } | foreach { $PercentageValue = $matches['percentage'] }
+	type "$WorkingDir\$CoverageDir\Summary.txt" | where { $_ -match "Line coverage: (?<percentage>[A-Z0-9.%]+)" } | foreach { $PercentageValue = $matches['percentage'] }
 
 	Write-Host "Coverage percentage: $PercentageValue"
 
