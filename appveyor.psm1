@@ -5,7 +5,7 @@ function Invoke-PendingStatus
 {
 	param()
 
-	Update-GitHubStatus -status "pending" -message "Waiting for OpenCover coverage update to complete"
+	Update-GitHubStatus -status "pending" -message "Waiting for OpenCover to complete"
 }
 
 function Update-GitHubStatus
@@ -23,7 +23,7 @@ function Update-GitHubStatus
 		state = $status;
 		target_url = "https://appveyor.com/";
 		description = $message;
-		context = "coverage/opencover";
+		context = "coverage/opencover/pr";
 	}
 
 	$Params = @{
@@ -80,11 +80,11 @@ function Post-ReportStatus
 	)
 
 	$Status = "failure"
-	$Message = "Coverage failed to reach $RequiredCoverage% ($percentage)" 
+
+	$Message = "Line coverage is $percentage (required: $RequiredCoverage%)" 
 
 	if ($percentage -ge $RequiredCoverage) {
 		$Status = "success"
-		$Message = "Coverage is $RequiredCoverage% or higher  ($percentage)"
 	}
 
 	Update-GitHubStatus -status $Status -message $Message
