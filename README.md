@@ -6,7 +6,7 @@ This is a Web application that lists books that are staff favorites. Users can s
 
 ## Installing
 
-Follow these steps to install the 'ReadingTimeDemo':
+Follow these steps to install the `ReadingTimeDemo`:
 - Clone the repository on your local machine using Git command-line, from GitHub using GitHub Desktop or Visual Studio or direct from Visual Studio.
 - Open the solution in Visual Studio.
 - Select Test, Run, All Tests (Ctrl+R, A) to restore the project and run all tests.
