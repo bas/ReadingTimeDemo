@@ -1,4 +1,4 @@
-$RequiredCoverage=80
+$RequiredCoverage=90
 $User="appveyor"
 
 function Invoke-PendingStatus
