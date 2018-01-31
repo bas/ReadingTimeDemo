@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A5F08ECA-9E47-40FB-87C4-1BEBABFC3EFD}"
 EndProject
@@ -10,15 +10,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.travis.yml = .travis.yml
 		appveyor.psm1 = appveyor.psm1
 		appveyor.yml = appveyor.yml
-		global.json = global.json
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ReadingTimeDemo", "src\ReadingTimeDemo\ReadingTimeDemo.xproj", "{C8F2FB44-FBA1-4383-A333-B9B3504D2C51}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FB5CF2D1-E581-483A-B21F-642296AF76CB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ReadingTimeDemo.UnitTests", "test\ReadingTimeDemo.UnitTests\ReadingTimeDemo.UnitTests.xproj", "{0284472F-15F6-4997-8C80-04B49A26FB10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingTimeDemo", "src\ReadingTimeDemo\ReadingTimeDemo.csproj", "{C8F2FB44-FBA1-4383-A333-B9B3504D2C51}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingTimeDemo.UnitTests", "test\ReadingTimeDemo.UnitTests\ReadingTimeDemo.UnitTests.csproj", "{0284472F-15F6-4997-8C80-04B49A26FB10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,5 +40,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C8F2FB44-FBA1-4383-A333-B9B3504D2C51} = {A5F08ECA-9E47-40FB-87C4-1BEBABFC3EFD}
 		{0284472F-15F6-4997-8C80-04B49A26FB10} = {FB5CF2D1-E581-483A-B21F-642296AF76CB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3DEA5E8-D463-41A2-81A4-17BF50139EFA}
 	EndGlobalSection
 EndGlobal
