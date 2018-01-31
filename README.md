@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This is a Web application that lists books that are staff favorites. Users can subscribe to the list by submitting their e-mail address at the bottom of the page.
+This is an awesome Web application that lists books that are staff favorites. Users can subscribe to the list by submitting their e-mail address at the bottom of the page.
 
 ## Installing
 
