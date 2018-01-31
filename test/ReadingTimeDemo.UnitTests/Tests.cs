@@ -125,32 +125,6 @@ namespace Tests
 
         }
 
-        [Theory]
-        [InlineData(0)]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        [InlineData(4)]
-        [InlineData(5)]
-        public void ValidRatingTest(int rating)
-        {
-            Book book = new Book("Crossing the Chasm", "Geoffrey A. Moore");
-            book.Rating = rating;
-            Assert.Equal(rating, book.Rating);
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(6)]
-        public void InvalidRatingTest(int rating)
-        {
-            Book book = new Book("Crossing the Chasm", "Geoffrey A. Moore");
-
-            Exception ex = Record.Exception(() => book.Rating = rating);
-
-            Assert.IsType<ArgumentOutOfRangeException>(ex);
-        }
-
         [Fact]
         public void BookControllerViewAndModelTest()
         {
