@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using ReadingTimeDemo.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System;
+using System.Linq;
 
 namespace Tests
 {
@@ -19,7 +21,7 @@ namespace Tests
         }
 
         [Fact]
-        public void TestBookConstructor() 
+        public void TestBookConstructor()
         {
             Book book = new Book("Crossing the Chasm", "Geoffrey A.Moore");
             Assert.Equal("Geoffrey A.Moore", book.Author);
@@ -123,6 +125,45 @@ namespace Tests
 
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        public void ValidRatingTest(int rating)
+        {
+            Book book = new Book("Crossing the Chasm", "Geoffrey A. Moore");
+            book.Rating = rating;
+            Assert.Equal(rating, book.Rating);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(6)]
+        public void InvalidRatingTest(int rating)
+        {
+            Book book = new Book("Crossing the Chasm", "Geoffrey A. Moore");
+
+            Exception ex = Record.Exception(() => book.Rating = rating);
+
+            Assert.IsType<ArgumentOutOfRangeException>(ex);
+        }
+
+        [Fact]
+        public void BookControllerViewAndModelTest()
+        {
+            var controller = new BookController();
+
+            var result = controller.Index();
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            var books = Assert.IsAssignableFrom<IEnumerable<Book>>(
+                viewResult.ViewData.Model);
+            Assert.Equal(4, books.Count());
+        }
+
     }
 }
-
