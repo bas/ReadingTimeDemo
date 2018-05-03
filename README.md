@@ -1,5 +1,7 @@
 # ReadingTimeDemo
 
+[![Build Status](https://bernardustest.visualstudio.com/_apis/public/build/definitions/dbf9afd8-37d7-4edf-9e1f-eac97e3a06c3/1/badge)](https://bernardustest.visualstudio.com/ReadingTimeDemo/_build/index?definitionId=1)
+
 ## Purpose
 
 This is a Web application that lists staff favorites. Users can subscribe to the list by submitting their e-mail address at the bottom of the page.
