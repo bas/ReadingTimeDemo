@@ -27,8 +27,8 @@ Follow these steps to run the applicaiton from the command-line:
 ```
 dotnet restore
 dotnet build
-dotnet test test/ReadingTimeDemo
-dornet run --project src/ReadingTimedemo/ReadingTimeDemo.csproj
+dotnet test test/ReadingTimeDemo.UnitTests
+dotnet run --project src/ReadingTimeDemo/ReadingTimeDemo.csproj
 ```
 
 ## Contributing
