@@ -8,6 +8,7 @@
 *.sln.docstates
 coverage/
 coverage.xml
+.vscode/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
