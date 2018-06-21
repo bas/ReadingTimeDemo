@@ -1,6 +1,6 @@
 # ReadingTimeDemo
 
-[![Build Status](https://bernardustest.visualstudio.com/_apis/public/build/definitions/dbf9afd8-37d7-4edf-9e1f-eac97e3a06c3/1/badge)](https://bernardustest.visualstudio.com/ReadingTimeDemo/_build/index?definitionId=1)
+[![Build Status](https://octodemo-readingtimedemo.visualstudio.com/_apis/public/build/definitions/dbf9afd8-37d7-4edf-9e1f-eac97e3a06c3/1/badge)](https://octodemo-readingtimedemo.visualstudio.com/ReadingTimeDemo/_build/index?definitionId=1)
 
 ## Purpose
 
@@ -36,6 +36,6 @@ dotnet run --project src/ReadingTimeDemo/ReadingTimeDemo.csproj
 Contributions are welcome. If you want to contribute to the project please fork the repository to make any code changes and open a Pull Request to propose your changes to the core team. Please make sure to follow the [Microsoft coding conventions](https://msdn.microsoft.com/en-us/library/ff926074.aspx) and add unit tests to ensure the build quality. For unit tests we currently use [xUnit](https://xunit.github.io/).
 
 ## About
-The `ReadingTimeDemo` is a demo Web application using .NET Core, NuGet and xUnit with Appveyor for CI, OpenCover for test coverage and Azure for continuous deployment. A Powershell script is used to run OpenCover and report the results as a status in the Pull Request.
+The `ReadingTimeDemo` is a demo Web application using .NET Core 2.0, NuGet and xUnit and VSTS for builds and Azure for continuous deployment.
 
 
