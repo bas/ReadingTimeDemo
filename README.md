@@ -1,6 +1,10 @@
 # ReadingTimeDemo
 
-[![Build Status](https://octodemo-readingtimedemo.visualstudio.com/_apis/public/build/definitions/dbf9afd8-37d7-4edf-9e1f-eac97e3a06c3/1/badge)](https://octodemo-readingtimedemo.visualstudio.com/ReadingTimeDemo/_build/index?definitionId=1)
+|||
+|---|---|
+| Build Status |[![Build Status](https://octodemo-readingtimedemo.visualstudio.com/_apis/public/build/definitions/dbf9afd8-37d7-4edf-9e1f-eac97e3a06c3/1/badge)](https://octodemo-readingtimedemo.visualstudio.com/ReadingTimeDemo/_build/index?definitionId=1)|
+| Preview Deployment | [![Preview Deployment](https://octodemo-readingtimedemo.vsrm.visualstudio.com/_apis/public/Release/badge/dbf9afd8-37d7-4edf-9e1f-eac97e3a06c3/1/2)](https://octodemo-readingtime-dev.azurewebsites.net/)|
+| Production Deployment |[![Production Releaae](https://octodemo-readingtimedemo.vsrm.visualstudio.com/_apis/public/Release/badge/dbf9afd8-37d7-4edf-9e1f-eac97e3a06c3/1/4)](https://octodemo-readingtime.azurewebsites.net/)|
 
 ## Purpose
 
