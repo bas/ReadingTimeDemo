@@ -13,5 +13,7 @@ namespace ReadingTimeDemo.Services
             new Book("The Pragmatic Programmer: From Journeyman to Master", "David Thomas", "pragmatic.jpg"),
             new Book("Don't Make Me Think, Revisited: A Common Sense Approach to Web Usability"," Steve Krug", "think.jpg")
         };
+
+        public List<Book> UnusedList;
     }
 }
