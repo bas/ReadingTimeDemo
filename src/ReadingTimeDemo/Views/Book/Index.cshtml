@@ -23,6 +23,19 @@
                                         <h4 class="media-heading"><a href="#">@item.Title</a></h4>
                                         <h5 class="media-heading"> by <a href="#">@item.Author</a></h5>
                                         <span>Status: </span><span class="text-success"><strong>In Stock</strong></span>
+                                        <div>
+                                            <span>Rating: </span>
+                                            <span>
+                                                @{
+                                                    var i = 0;
+                                                    while (i < @item.Rating)
+                                                    {
+                                                        i += 1;
+                                                        <img src="~/images/star.png" style="width: 12px; height: 12px;" />
+                                                    }
+                                                }
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
