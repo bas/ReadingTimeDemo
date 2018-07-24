@@ -12,7 +12,7 @@ namespace ReadingTimeDemo.Models
         public string Author { get; set; }
         public string Cover { get; set; }
 
-        private int rating;
+        private String rating;
 
         public Book()
         {
