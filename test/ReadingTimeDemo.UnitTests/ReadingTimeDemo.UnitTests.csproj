@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <ProjectGuid>7f20510d-56bd-4111-9aeb-9b2c800e079d</ProjectGuid>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>ReadingTimeDemo.UnitTests</AssemblyName>
