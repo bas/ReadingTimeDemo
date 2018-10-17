@@ -11,7 +11,7 @@ namespace ReadingTimeDemo.Controllers
 
         public IActionResult Index()
         {
-            return View(bookService.Books);
+            return View(bookService.Books());
         }
     }
 }

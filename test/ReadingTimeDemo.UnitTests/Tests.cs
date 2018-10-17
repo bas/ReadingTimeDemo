@@ -83,7 +83,7 @@ namespace Tests
         public void BookServiceCountTest()
         {
             BookService bookService = new BookService();
-            Assert.Equal(4, bookService.Books.Count);
+            Assert.Equal(4, bookService.Books().Count);
         }
 
         [Fact]
