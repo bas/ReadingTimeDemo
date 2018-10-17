@@ -12,6 +12,7 @@ namespace ReadingTimeDemo.Models
         public string Author { get; set; }
         public string Cover { get; set; }
 
+        [Range(0, 5)]
         private int rating;
 
         public Book()
@@ -41,13 +42,16 @@ namespace ReadingTimeDemo.Models
 
         public int Rating
         {
-            get { return rating; }
+            get { return Rating1; }
             set
             {
                 ValidateRating(value);
-                rating = value;
+                Rating1 = value;
             }
         }
+
+        public int Rating1 { get => rating; set => rating = value; }
+        public int Rating2 { get => rating; set => rating = value; }
 
         public static double ValidateRating(int input)
         {
