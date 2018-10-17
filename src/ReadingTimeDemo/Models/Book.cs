@@ -42,24 +42,21 @@ namespace ReadingTimeDemo.Models
 
         public int Rating
         {
-            get { return Rating1; }
+            get { return rating; }
             set
             {
                 ValidateRating(value);
-                Rating1 = value;
+                rating = value;
             }
         }
 
-        public int Rating1 { get => rating; set => rating = value; }
-        public int Rating2 { get => rating; set => rating = value; }
-
-        public static double ValidateRating(int input)
+        public static double ValidateRating(int rating)
         {
-            if (input < 0 || input > 5)
+            if (rating < 0 || rating > 5)
             {
-                throw new System.ArgumentOutOfRangeException("Rating must be a value between 0 and 5");
+                throw new System.ArgumentOutOfRangeException("rating","Rating must be a value between 0 and 5");
             }
-            return input;
+            return rating;
         }
     }
 
