@@ -12,6 +12,7 @@ namespace ReadingTimeDemo.Models
         public string Author { get; set; }
         public string Cover { get; set; }
 
+        [Range(0, 5)]
         private int rating;
 
         public Book()
@@ -49,13 +50,13 @@ namespace ReadingTimeDemo.Models
             }
         }
 
-        public static double ValidateRating(int input)
+        public static double ValidateRating(int rating)
         {
-            if (input < 0 || input > 5)
+            if (rating < 0 || rating > 5)
             {
-                throw new System.ArgumentOutOfRangeException("Rating must be a value between 0 and 5");
+                throw new System.ArgumentOutOfRangeException("rating","Rating must be a value between 0 and 5");
             }
-            return input;
+            return rating;
         }
     }
 

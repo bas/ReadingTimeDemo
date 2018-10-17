@@ -83,7 +83,7 @@ namespace Tests
         public void BookServiceCountTest()
         {
             BookService bookService = new BookService();
-            Assert.Equal(4, bookService.Books.Count);
+            Assert.Equal(4, actual: bookService.Books().Count);
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace Tests
 
             var result = controller.Index();
 
-            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.IsType<ViewResult>(result);
 
         }
 
