@@ -246,3 +246,10 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+.sonarqube/
+.store/
+SonarQube.Analysis.xml
+dotnet-sonarscanner
+
+coverage.opencover.xml
