@@ -23,7 +23,7 @@ steps:
     projectName: ReadingTimedotnet
     extraProperties: |
      sonar.exclusions=**/wwwroot/**/*,/Project_Readme.html
-     sonar.cs.cobertura.reportsPaths=$(System.DefaultWorkingDirectory)/test/ReadingTimeDemo.UnitTests/coverage.*.xml
+     sonar.cs.opencover.reportsPaths=$(System.DefaultWorkingDirectory)/test/ReadingTimeDemo.UnitTests/coverage.*.xml
      
 
 - task: DotNetCoreCLI@2
