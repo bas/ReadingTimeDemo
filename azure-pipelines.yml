@@ -39,19 +39,13 @@ steps:
     projects: '**/*[Tt]ests/*.csproj'
     arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
 
-- task: PublishTestResults@2
-  displayName: 'Publish Test Results'
-  condition: succeededOrFailed()
-  inputs:
-     testResultsFiles: '$(System.DefaultWorkingDirectory)/test-report.xml'
-
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish Code Coverage'
   condition: in(variables['Agent.JobStatus'], 'Succeeded')
   inputs:
     codeCoverageTool: OpenCover
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/*coverage.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/test/ReadingTimeDemo.UnitTests/coverage.*.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/testReadingTimeDemo.UnitTests'
 
 - task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@4
   displayName: 'Run Code Analysis'
