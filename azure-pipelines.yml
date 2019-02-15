@@ -37,13 +37,13 @@ steps:
   inputs:
     command: test
     projects: '**/*[Tt]ests/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
+    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish Code Coverage'
   condition: in(variables['Agent.JobStatus'], 'Succeeded')
   inputs:
-    codeCoverageTool: OpenCover
+    codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/test/ReadingTimeDemo.UnitTests/coverage.*.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/testReadingTimeDemo.UnitTests'
 
