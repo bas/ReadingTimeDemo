@@ -37,7 +37,7 @@ steps:
   inputs:
     command: test
     projects: '**/*[Tt]ests/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish Code Coverage'
@@ -46,7 +46,6 @@ steps:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/test/ReadingTimeDemo.UnitTests/coverage.*.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/testReadingTimeDemo.UnitTests'
-    arguments: "-reportTypes:htmlInline"
 
 - task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@4
   displayName: 'Run Code Analysis'
