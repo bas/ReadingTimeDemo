@@ -23,7 +23,7 @@ steps:
     projectName: ReadingTimedotnet
     extraProperties: |
      sonar.exclusions=**/wwwroot/**/*,/Project_Readme.html
-     sonar.cs.opencover.reportsPaths=$(System.DefaultWorkingDirectory)/test/ReadingTimeDemo.UnitTests/coverage.*.xml
+     sonar.cs.opencover.reportsPaths=$(System.DefaultWorkingDirectory)/coverage/*coverage.xml
      
 
 - task: DotNetCoreCLI@2
@@ -38,6 +38,20 @@ steps:
     command: test
     projects: '**/*[Tt]ests/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results'
+  condition: succeededOrFailed()
+  inputs:
+     testResultsFiles: '$(System.DefaultWorkingDirectory)/test-report.xml'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage'
+  condition: in(variables['Agent.JobStatus'], 'Succeeded')
+  inputs:
+    codeCoverageTool: OpenCover
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/*coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
 
 - task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@4
   displayName: 'Run Code Analysis'
