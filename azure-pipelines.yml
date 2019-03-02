@@ -44,7 +44,7 @@ steps:
 
 - task: SonarSource.sonarqube.291ed61f-1ee4-45d3-b1b0-bf822d9095ef.SonarQubePublish@4
   displayName: 'Publish Quality Gate Result'
-
+  
 - task: DotNetCoreCLI@2
   displayName: Publish
   inputs:
@@ -52,6 +52,15 @@ steps:
     publishWebProjects: True
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
     zipAfterPublish: True
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(System.DefaultWorkingDirectory)/deployment
+    contents: '*.ps1' 
+    targetFolder: $(build.artifactstagingdirectory)
+    #cleanTargetFolder: false # Optional
+    #overWrite: false # Optional
+    #flattenFolders: false # Optional
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
