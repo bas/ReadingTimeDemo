@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "p_environment": {
+            "type": "string"
+        },
+        "p_separator": {
+            "defaultValue": "-",
+            "type": "string"
+        },
+        "p_site_prefix": {
+            "defaultValue": "readingtime",
+            "type": "string"
+        },
+        "p_site_web_name": {
+            "defaultValue": "web",
+            "type": "string"
+        }
+    },
+    "variables": {
+        "site_web_name": "[concat(parameters('p_site_prefix'), parameters('p_separator'), parameters('p_site_web_name'), parameters('p_separator'), parameters('p_environment'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "kind": "app",
+            "name": "[variables('site_web_name')]",
+            "apiVersion": "2016-08-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "name": "[variables('site_web_name')]",
+                "reserved": false,
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "netFrameworkVersion",
+                            "value": "v4.0"
+                        },
+                        {
+                            "name": "linuxFxVersion",
+                            "value": "DOTNETCORE|2.1"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "web": {
+            "type": "string",
+            "value": "[variables('site_web_name')]"
+        }
+    }
+}

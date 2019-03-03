@@ -56,7 +56,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     sourceFolder: $(System.DefaultWorkingDirectory)/deployment
-    contents: '*.ps1' 
+    contents: '**' 
     targetFolder: $(build.artifactstagingdirectory)
     #cleanTargetFolder: false # Optional
     #overWrite: false # Optional
