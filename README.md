@@ -6,7 +6,7 @@
 |---|---|
 | Build & Test |[![Build Status](https://octodemo-readingtimedemo.visualstudio.com/_apis/public/build/definitions/dbf9afd8-37d7-4edf-9e1f-eac97e3a06c3/1/badge)](https://octodemo-readingtimedemo.visualstudio.com/ReadingTimeDemo/_build/index?definitionId=1)|
 | Test Deployment | [![Test Deployment](https://vsrm.dev.azure.com/github-octodemo/_apis/public/Release/badge/79273f82-c6e1-4d72-ad34-8e5af6596e29/1/1)](https://readingtime-web-test.azurewebsites.net)|
-| Preview Deployment | [![Preview Deployment](https://vsrm.dev.azure.com/github-octodemo/_apis/public/Release/badge/79273f82-c6e1-4d72-ad34-8e5af6596e29/1/2)](https://readingtime-web-preview.azurewebsites.net)|
+| Preview Deployment | [![Preview Deployment](https://vsrm.dev.azure.com/github-octodemo/_apis/public/Release/badge/79273f82-c6e1-4d72-ad34-8e5af6596e29/1/2)](https://readingtime-web-staging.azurewebsites.net)|
 | Production Deployment |[![Production Releaae](https://vsrm.dev.azure.com/github-octodemo/_apis/public/Release/badge/79273f82-c6e1-4d72-ad34-8e5af6596e29/1/3)](https://readingtime-web-production.azurewebsites.net)|
 
 ## Purpose
