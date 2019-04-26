@@ -1,6 +1,6 @@
 Write-Host "Reading:" $env:DeployId
 
-$url = "https://api.octodemo.com/v3/repos/office-tools/ReadingTimeDemo/deployments/$env:DeployId/statuses"
+$url = "https://octodemo.com/api/v3/repos/office-tools/ReadingTimeDemo/deployments/$env:DeployId/statuses"
 
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Authorization", "Token $env:MAPPED_GITHUB_TOKEN")
