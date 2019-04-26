@@ -14,6 +14,6 @@ Write-Output "$json"
 
 Write-Output "Token $env:MAPPED_GITHUB_TOKEN"
 
-$response = Invoke-RestMethod "https://api.github.com/repos/octodemo/ReadingTimeDemo/deployments" -Headers $headers -Method Post -Body $json -ContentType 'application/json'
+$response = Invoke-RestMethod "https://api.octodemo.com/v3/repos/office-tools/ReadingTimeDemo/deployments" -Headers $headers -Method Post -Body $json -ContentType 'application/json'
 
 Write-Host "$("##vso[task.setvariable variable=DeployId]")$($response.id)"
