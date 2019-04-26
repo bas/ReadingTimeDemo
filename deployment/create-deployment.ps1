@@ -1,4 +1,4 @@
-$url = "https://octodemo.com/api/v3/repos/office-tools/ReadingTimeDemo"
+$url = "https://octodemo.com/api/v3/repos/office-tools/ReadingTimeDemo/deployments"
 
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Authorization", "Token $env:MAPPED_GITHUB_TOKEN")
@@ -16,6 +16,6 @@ Write-Output "$json"
 
 Write-Output "Token $env:MAPPED_GITHUB_TOKEN"
 
-$response = Invoke-RestMethod "$(url)/deployments" -Headers $headers -Method Post -Body $json -ContentType 'application/json'
+$response = Invoke-RestMethod $url -Headers $headers -Method Post -Body $json -ContentType 'application/json'
 
 Write-Host "$("##vso[task.setvariable variable=DeployId]")$($response.id)"
