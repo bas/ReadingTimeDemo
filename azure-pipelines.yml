@@ -3,8 +3,7 @@ resources:
 
 pool:
   vmImage: 'Ubuntu-16.04'
-  demands: java
-
+  
 variables:
   buildConfiguration: 'Release'
 
@@ -14,8 +13,6 @@ steps:
   inputs:
     command: restore
     projects: '**/*.csproj'
-
-    
 
 - task: DotNetCoreCLI@2
   displayName: Build
@@ -28,7 +25,7 @@ steps:
   inputs:
     command: test
     projects: '**/*[Tt]ests/*.csproj'
-    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover'
+    arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
 
 - task: DotNetCoreCLI@2
   displayName: Publish
