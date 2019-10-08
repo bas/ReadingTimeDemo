@@ -27,9 +27,9 @@ jobs:
         az appservice plan create -g $RESOURCE_GROUP -n $PLAN_NAME --is-linux --sku $SKU
         az webapp create -g $RESOURCE_GROUP -p $PLAN_NAME -n $APP_NAME --runtime "DOTNETCORE|2.2"
       env:
-        RESOURCE_GROUP: ${{ github.actor }}-${{ github.sha }}-grp
-        PLAN_NAME: ${{ github.actor }}-${{ github.sha }}-plan
-        APP_NAME: ${{ github.actor }}-${{ github.sha }}-app 
+        RESOURCE_GROUP: ${{ github.actor }}-readingtimedemo-grp
+        PLAN_NAME: ${{ github.actor }}-readingtimedemo-plan
+        APP_NAME: ${{ github.actor }}-readingtimedemo-app 
         LOCATION: westeurope
         SKU: B1
 
@@ -42,7 +42,7 @@ jobs:
     - name: Deploy
       uses: azure/webapps-deploy@v1
       with: 
-        app-name: ${{ github.actor }}-${{ github.sha }}-app
+        app-name: ${{ github.actor }}-readingtimedemo-app
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
 
     - name: Destroy resource group
