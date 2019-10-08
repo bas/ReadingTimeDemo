@@ -25,7 +25,7 @@ jobs:
       run: |
         az group create -l $LOCATION -n $RESOURCE_GROUP
         az appservice plan create -g $RESOURCE_GROUP -n $PLAN_NAME --is-linux --sku $SKU
-        az webapp create -g $RESOURCE_GROUP -p $PLAN_NAME -n $APP_NAME --runtime DOTNETCORE|2.2
+        az webapp create -g $RESOURCE_GROUP -p $PLAN_NAME -n $APP_NAME --runtime "DOTNETCORE|2.2"
       env:
         RESOURCE_GROUP: ${{ github.actor }}-${{ github.sha }}-grp
         PLAN_NAME: ${{ github.actor }}-${{ github.sha }}-plan
