@@ -43,7 +43,7 @@ jobs:
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ github.actor }}-${{ github.sha }}-app
-        package: './ReadingTimeDemo' 
+        package: './src/ReadingTimeDemo/ReadingTimeDemo' 
 
     - name: Destroy resource group
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
