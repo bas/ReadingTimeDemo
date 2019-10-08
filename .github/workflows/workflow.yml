@@ -1,0 +1,31 @@
+name: Build test and deploy review app
+
+on: [pull_request]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest   
+    steps:
+    
+    - uses: actions/checkout@v1
+    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    
+    - name: Create or update resource group and webapp
+      if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+      run: |
+        echo "Opened or re-opened pull request"
+    
+    - name: Build and test
+      run: |
+        dotnet build --configuration Release
+        dotnet test test/ReadingTimeDemo.UnitTests --configuration Release
+        dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
+    
+    - name: Destroy resource group
+      if: github.event_name == 'pull_request' && github.event.action == 'closed'
+      run: echo "Closed pull request"
