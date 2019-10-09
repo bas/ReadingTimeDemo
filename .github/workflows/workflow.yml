@@ -5,6 +5,9 @@ on: [pull_request]
 jobs:
 
   build:
+    env: 
+      RESOURCE_GROUP: ${{ github.actor }}-readingtimedemo-grp
+
     runs-on: ubuntu-latest   
     steps:
     
@@ -27,7 +30,6 @@ jobs:
         az appservice plan create -g $RESOURCE_GROUP -n $PLAN_NAME --is-linux --sku $SKU
         az webapp create -g $RESOURCE_GROUP -p $PLAN_NAME -n $APP_NAME --runtime "DOTNETCORE|2.2"
       env:
-        RESOURCE_GROUP: ${{ github.actor }}-readingtimedemo-grp
         PLAN_NAME: ${{ github.actor }}-readingtimedemo-plan
         APP_NAME: ${{ github.actor }}-readingtimedemo-app 
         LOCATION: westeurope
@@ -39,24 +41,44 @@ jobs:
         dotnet test test/ReadingTimeDemo.UnitTests --configuration Release
         dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
 
+    - name: Create deployment
+      uses: bas/create-deployment@v1
+      id: deployment
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.ref }}
+        required_contexts: '[]'
+        environment: review
+        
     - name: Deploy
       id: deploy
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ github.actor }}-readingtimedemo-app
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
-    
+       
     - name: Update deployment status to success
-      run: echo ${{ steps.deploy.outputs.webapp-url }}
-
+      uses: bas/create-deployment-status@v1
+      with: 
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        state: success
+        environment: review
+        target_url: ${{ steps.deploy.outputs.webapp-url }}
+    
     - name: Update deployment status to failure
+      uses: bas/create-deployment-status@v1
       if: failure()
-      run: echo ${{ steps.deploy.outputs.webapp-url }}
+      with: 
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        state: failure 
+        environment: review
+        target_url: ${{ steps.deploy.outputs.webapp-url }} 
       
     - name: Destroy resource group
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
-      run: echo "Closed pull request"
+      run: az group delete -n $RESOURCE_GROUP --yes
     
     - name: logout
-      run: |
-        az logout
+      run: az logout
