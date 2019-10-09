@@ -42,7 +42,7 @@ jobs:
         dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
 
     - name: Write branch
-      runs: echo ${{ github.ref }}
+      run: echo ${{ github.ref }}
 
     - name: Create deployment
       uses: bas/create-deployment@v1
