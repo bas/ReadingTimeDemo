@@ -61,18 +61,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-          deployment_id=$(cat deployment_id)
-          curl -s -H "Authorization: Token ${GITHUB_TOKEN}" \
-          -H "Accept: application/vnd.github.flash-preview+json" -X POST \
-          -d '{ "state": "success", "environment_url": "${{ steps.azure.outputs.webapp-url }} }"' \
-          https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${{ steps.deploy.outputs.deployment_id }}/statuses
+        curl -s -H "Authorization: Token ${GITHUB_TOKEN}" \
+        -H "Accept: application/vnd.github.flash-preview+json" -X POST \
+        -d '{ "state": "success", "environment_url": "${{ steps.azure.outputs.webapp-url }}" }' \
+        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${{ steps.deploy.outputs.deployment_id }}/statuses
       
     - name: Update GitHub deployment status to failure
       if: failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          deployment_id=$(cat deployment_id)
           curl -s -H "Authorization: Token ${GITHUB_TOKEN}" -X POST\
           -d '{ "state": "failure"}' \
           https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${{ steps.deploy.outputs.deployment_id }}/statuses
