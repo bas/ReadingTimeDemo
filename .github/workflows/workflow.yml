@@ -49,7 +49,7 @@ jobs:
       id: deployment
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        ref: ${{ github.sha }}
+        ref: replace-scrum
         required_contexts: "[]"
         environment: "review"
 
