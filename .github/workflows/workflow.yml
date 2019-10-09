@@ -24,7 +24,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         
     - name: Create webapp
-      #if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+      if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
       run: |
         az group create -l $LOCATION -n $RESOURCE_GROUP
         az appservice plan create -g $RESOURCE_GROUP -n $PLAN_NAME --is-linux --sku $SKU
@@ -43,15 +43,15 @@ jobs:
 
     - name: Create deployment
       uses: bas/create-deployment@v1
-      id: deployment
+      id: deploy
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         ref: ${{ github.ref }}
         required_contexts: '[]'
-        environment: review
+        environment: 'review'
         
     - name: Deploy
-      id: deploy
+      id: azure
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ github.actor }}-readingtimedemo-app
@@ -61,20 +61,20 @@ jobs:
       uses: bas/create-deployment-status@v1
       with: 
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-        state: success
-        environment: review
-        target_url: ${{ steps.deploy.outputs.webapp-url }}
+        deployment_id: ${{ steps.deploy.outputs.deployment_id }}
+        state: 'success'
+        environment: 'review'
+        target_url: ${{ steps.azure.outputs.webapp-url }}
     
     - name: Update deployment status to failure
       uses: bas/create-deployment-status@v1
       if: failure()
       with: 
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-        state: failure 
-        environment: review
-        target_url: ${{ steps.deploy.outputs.webapp-url }} 
+        deployment_id: ${{ steps.deploy.outputs.deployment_id }}
+        state: 'failure' 
+        environment: 'review'
+        target_url: ${{ steps.azure.outputs.webapp-url }} 
       
     - name: Destroy resource group
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
