@@ -22,7 +22,19 @@ jobs:
       uses: azure/actions/login@master
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
+
+    - name: Create webapp
+      if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+      run: |
+        az group create -l $LOCATION -n $RESOURCE_GROUP
+        az appservice plan create -g $RESOURCE_GROUP -n $PLAN_NAME --is-linux --sku $SKU
+        az webapp create -g $RESOURCE_GROUP -p $PLAN_NAME -n $APP_NAME --runtime "DOTNETCORE|2.2"
+      env:
+        PLAN_NAME: ${{ github.actor }}-readingtimedemo-plan
+        APP_NAME: ${{ github.actor }}-readingtimedemo-app 
+        LOCATION: westeurope
+        SKU: B1
+    
     - name: Build and test
       run: |
         dotnet build --configuration Release
