@@ -40,11 +40,19 @@ jobs:
         dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
 
     - name: Deploy
+      id: deploy
       uses: azure/webapps-deploy@v1
       with: 
         app-name: ${{ github.actor }}-readingtimedemo-app
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
+    
+    - name: Update deployment status to success
+      run: echo ${{ outputs.steps.deployment.webapp-url }}
 
+    - name: Update deployment status to failure
+      if: failure()
+      run: echo ${{ outputs.steps.deployment.webapp-url }}
+      
     - name: Destroy resource group
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
       run: echo "Closed pull request"
