@@ -41,14 +41,13 @@ jobs:
         dotnet test test/ReadingTimeDemo.UnitTests --configuration Release
         dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
 
-    - name: Create deployment
-      uses: bas/create-deployment@v1
-      id: deploy
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        ref: ${{ github.ref }}
-        required_contexts: '[]'
-        environment: 'review'
+    - name: Create GitHub deployment
+      run: |
+        curl -s -H "Authorization: Token ${GITHUB_TOKEN}" -X POST \
+        -d '{ "required_contexts": [], "auto_merge": false, "ref": "'${GITHUB_SHA}'", "environment": "review"}' \
+        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments | jq '.id' >> deployment_id
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Deploy
       id: azure
@@ -59,10 +58,11 @@ jobs:
  
     - name: Update GitHub deployment status to success
       run: |
+        deployment_id=$(cat deployment_id)
         curl -s -H "Authorization: Token ${GITHUB_TOKEN}" \
         -H "Accept: application/vnd.github.flash-preview+json" -X POST \
         -d '{ "state": "success", "environment_url": "${{ steps.azure.outputs.webapp-url }}" }' \
-        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${DEPLOYMENT_ID}/statuses
+        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${deploymet_id}/statuses
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DEPLOYMENT_ID: ${{ steps.deploy.outputs.deployment_id }}
@@ -70,12 +70,12 @@ jobs:
     - name: Update GitHub deployment status to failure
       if: failure()
       run: |
+        deployment_id=$(cat deployment_id)
         curl -s -H "Authorization: Token ${GITHUB_TOKEN}" -X POST\
         -d '{ "state": "failure"}' \
-        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${DEPLOYMENT_ID}/statuses
+        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${deploymet_id}/statuses
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEPLOYMENT_ID: ${{ steps.deploy.outputs.deployment_id }}
    
     - name: Destroy resource group
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
