@@ -56,26 +56,27 @@ jobs:
       with: 
         app-name: ${{ github.actor }}-readingtimedemo-app
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
-       
-    - name: Update deployment status to success
-      uses: bas/create-deployment-status@v1
-      with: 
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        deployment_id: ${{ steps.deploy.outputs.deployment_id }}
-        state: 'success'
-        environment: 'review'
-        target_url: ${{ steps.azure.outputs.webapp-url }}
-    
-    - name: Update deployment status to failure
-      uses: bas/create-deployment-status@v1
-      if: failure()
-      with: 
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        deployment_id: ${{ steps.deploy.outputs.deployment_id }}
-        state: 'failure' 
-        environment: 'review'
-        target_url: ${{ steps.azure.outputs.webapp-url }} 
+ 
+    - name: Update GitHub deployment status to success
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+          deployment_id=$(cat deployment_id)
+          curl -s -H "Authorization: Token ${GITHUB_TOKEN}" \
+          -H "Accept: application/vnd.github.flash-preview+json" -X POST \
+          -d '{ "state": "success", "environment_url": "${{ steps.azure.outputs.webapp-url }} }"' \
+          https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${{ steps.deploy.outputs.deployment_id }}/statuses
       
+    - name: Update GitHub deployment status to failure
+      if: failure()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          deployment_id=$(cat deployment_id)
+          curl -s -H "Authorization: Token ${GITHUB_TOKEN}" -X POST\
+          -d '{ "state": "failure"}' \
+          https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${{ steps.deploy.outputs.deployment_id }}/statuses
+    
     - name: Destroy resource group
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
       run: az group delete -n $RESOURCE_GROUP --yes
