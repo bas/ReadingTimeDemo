@@ -49,7 +49,7 @@ jobs:
       id: deployment
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        ref: add-statuses
+        ref: ${{ github.sha }}
         required_contexts: "[]"
         environment: "review"
 
