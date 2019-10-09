@@ -64,7 +64,7 @@ jobs:
         app-name: ${{ github.actor }}-readingtimedemo-app
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
  
-   - name: Update deployment status to success
+    - name: Update deployment status to success
       uses: bas/create-deployment-status@v1
       with: 
         repo_token: ${{ secrets.GITHUB_TOKEN }}
