@@ -24,7 +24,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Create webapp
-      #if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+      if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
       run: |
         az group create -l $LOCATION -n $RESOURCE_GROUP
         az appservice plan create -g $RESOURCE_GROUP -n $PLAN_NAME --is-linux --sku $SKU
@@ -46,7 +46,7 @@ jobs:
       id: deployment
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        ref: ${{ github.ref }}
+        ref: add-statuses
         required_contexts: "[]"
         environment: "review"
 
