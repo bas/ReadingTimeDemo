@@ -47,11 +47,11 @@ jobs:
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
     
     - name: Update deployment status to success
-      run: echo ${{ outputs.steps.deployment.webapp-url }}
+      run: echo ${{ steps.deploy.outputs.webapp-url }}
 
     - name: Update deployment status to failure
       if: failure()
-      run: echo ${{ outputs.steps.deployment.webapp-url }}
+      run: echo ${{ steps.deploy.outputs.webapp-url }}
       
     - name: Destroy resource group
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
