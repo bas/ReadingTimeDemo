@@ -52,7 +52,7 @@ jobs:
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
  
     - name: Update GitHub deployment status to success
-      run: echo "Update GitHub deployment status to success: ${WEB_APP}"
+      run: echo "Update GitHub deployment status to success"
       env:
         WEB_APP: ${{ steps.azure.outputs.webapp-url }}
 
