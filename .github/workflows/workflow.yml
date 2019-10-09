@@ -41,9 +41,25 @@ jobs:
         dotnet test test/ReadingTimeDemo.UnitTests --configuration Release
         dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
 
+    - name: Write branch
+      run: echo ${{ github.ref }}
+
     - name: Create deployment
-      run: echo "TODO Create deployment"
-        
+      uses: bas/create-deployment@v1
+      id: deployment
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.sha }}
+        required_contexts: "[]"
+        environment: "review"
+
+    - name: Set deployment status to pending
+      uses: bas/create-deployment-status@v1
+      with: 
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        state: "pending"
+
     - name: Deploy
       id: azure
       uses: azure/webapps-deploy@v1
@@ -51,14 +67,23 @@ jobs:
         app-name: ${{ github.actor }}-readingtimedemo-app
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
  
-    - name: Update GitHub deployment status to success
-      run: echo "Update GitHub deployment status to success"
-      env:
-        WEB_APP: ${{ steps.azure.outputs.webapp-url }}
-
-    - name: Update GitHub deployment status to failure
+    - name: Update deployment status to success
+      uses: bas/create-deployment-status@v1
+      with: 
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        state: "success"
+        environment: "review"
+        target_url: ${{ steps.azure.outputs.webapp-url }}
+  
+    - name: Update deployment status to failure
+      uses: bas/create-deployment-status@v1
       if: failure()
-      run: echo "Update GitHub deployment status to failure"
-   
+      with: 
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+        state: "failure" 
+        environment: "review"
+     
     - name: logout
       run: az logout
