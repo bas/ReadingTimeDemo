@@ -1,0 +1,68 @@
+name: Build test and deploy review app
+
+on: [pull_request]
+
+jobs:
+
+  build:
+    env: 
+      RESOURCE_GROUP: ${{ github.actor }}-readingtimedemo-grp
+
+    runs-on: ubuntu-latest   
+    steps:
+    
+    - uses: actions/checkout@v1
+    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+
+    - name: Login to Azure
+      uses: azure/actions/login@master
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+    - name: Create webapp
+      if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+      run: |
+        az group create -l $LOCATION -n $RESOURCE_GROUP
+        az appservice plan create -g $RESOURCE_GROUP -n $PLAN_NAME --is-linux --sku $SKU
+        az webapp create -g $RESOURCE_GROUP -p $PLAN_NAME -n $APP_NAME --runtime "DOTNETCORE|2.2"
+      env:
+        PLAN_NAME: ${{ github.actor }}-readingtimedemo-plan
+        APP_NAME: ${{ github.actor }}-readingtimedemo-app 
+        LOCATION: westeurope
+        SKU: B1
+
+    - name: Build and test
+      run: |
+        dotnet build --configuration Release
+        dotnet test test/ReadingTimeDemo.UnitTests --configuration Release
+        dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
+
+    - name: Build and test
+      run: echo "Create deployment"
+        
+    - name: Deploy
+      id: azure
+      uses: azure/webapps-deploy@v1
+      with: 
+        app-name: ${{ github.actor }}-readingtimedemo-app
+        package: './src/ReadingTimeDemo/ReadingTimeDemo' 
+ 
+    - name: Update GitHub deployment status to success
+      run: echo "Update GitHub deployment status to success"
+      env:
+        WEB_APP: ${{ steps.azure.outputs.webapp-url }}
+
+    - name: Update GitHub deployment status to failure
+      if: failure()
+      run: echo "Update GitHub deployment status to failure"
+   
+    - name: Destroy resource group
+      if: github.event_name == 'pull_request' && github.event.action == 'closed'
+      run: az group delete -n $RESOURCE_GROUP --yes
+    
+    - name: logout
+      run: az logout
