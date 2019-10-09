@@ -58,23 +58,25 @@ jobs:
         package: './src/ReadingTimeDemo/ReadingTimeDemo' 
  
     - name: Update GitHub deployment status to success
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         curl -s -H "Authorization: Token ${GITHUB_TOKEN}" \
         -H "Accept: application/vnd.github.flash-preview+json" -X POST \
         -d '{ "state": "success", "environment_url": "${{ steps.azure.outputs.webapp-url }}" }' \
-        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${{ steps.deploy.outputs.deployment_id }}/statuses
+        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${DEPLOYMENT_ID}/statuses
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEPLOYMENT_ID: ${{ steps.deploy.outputs.deployment_id }}
       
     - name: Update GitHub deployment status to failure
       if: failure()
+      run: |
+        curl -s -H "Authorization: Token ${GITHUB_TOKEN}" -X POST\
+        -d '{ "state": "failure"}' \
+        https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${DEPLOYMENT_ID}/statuses
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          curl -s -H "Authorization: Token ${GITHUB_TOKEN}" -X POST\
-          -d '{ "state": "failure"}' \
-          https://api.github.com/repos/${GITHUB_REPOSITORY}/deployments/${{ steps.deploy.outputs.deployment_id }}/statuses
-    
+        DEPLOYMENT_ID: ${{ steps.deploy.outputs.deployment_id }}
+   
     - name: Destroy resource group
       if: github.event_name == 'pull_request' && github.event.action == 'closed'
       run: az group delete -n $RESOURCE_GROUP --yes
