@@ -16,6 +16,13 @@ jobs:
     - name: Get branch name
       run: |
         cat ${GITHUB_EVENT_PATH} | jq '.pull_request.head.ref'
+    
+    - name: Read branch name
+      uses: bas/get-branch-name@releases/v1
+      id: branch
+    
+    - name: Output branch name
+      run: echo ${{ steps.branch.outputs.ref }}
         
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
@@ -45,15 +52,12 @@ jobs:
         dotnet test test/ReadingTimeDemo.UnitTests --configuration Release
         dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
 
-    - name: Write branch
-      run: echo ${{ github.event_path.pull_request.head.ref }}
-
     - name: Create deployment
       uses: bas/create-deployment@v1
       id: deployment
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        ref: $(cat ${GITHUB_EVENT_PATH} | jq '.pull_request.head.ref')
+        ref: replace-ries
         required_contexts: "[]"
         environment: "review"
 
