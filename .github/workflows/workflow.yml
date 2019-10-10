@@ -13,6 +13,10 @@ jobs:
     
     - uses: actions/checkout@v1
     
+    - name: Get branch name from pulls ref
+      uses: bas/get-branch-name@v1
+      id: branch
+            
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -41,15 +45,12 @@ jobs:
         dotnet test test/ReadingTimeDemo.UnitTests --configuration Release
         dotnet publish src/ReadingTimeDemo --configuration Release -o ReadingTimeDemo --no-build --no-restore
 
-    - name: Write branch
-      run: echo ${{ github.ref }}
-
     - name: Create deployment
       uses: bas/create-deployment@v1
       id: deployment
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        ref: ${{ github.sha }}
+        ref: ${{ steps.branch.outputs.ref }}
         required_contexts: "[]"
         environment: "review"
 
